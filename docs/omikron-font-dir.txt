@@ -1,0 +1,24 @@
+Omikron font document
+
+If the game can find any of these files it defaults to using small.fnt
+
+menuintr.fnt - first for options on the start menu
+bigfnt.pix/siz - ????
+menusave.fnt - save menu, resume game quit game
+generic1.fnt - ???
+generic2.fnt - ???
+generic3.fnt - ???
+computer.fnt - ???
+parchemi.fnt - omikron font in books & notes :D
+dialsele.fnt - ???
+voixoff.fnt - for internal dialogue like : "I can't do that"
+dialogue.fnt - dialogues and answers
+bomkfont.pix/siz - ???
+sneak.fnt - Another omikron ttf, changes option menu and text on some notes ( like the mk400) 
+journal.fnt - The readable font used in the sneak and load/save menu options :D
+
+Replacing these fonts with journal.fnt will make the game readable:
+- sneak.fnt
+- menusave.fnt
+- menuintr.fnt
+- parchemi.fnt

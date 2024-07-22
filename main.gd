@@ -8,6 +8,27 @@ extends Control
 var omikron_dir_path
 var bad_fnt = ["sneak.fnt","menusave.fnt","menuintr.fnt","parchemi.fnt"]
 var good_fnt = "journal.fnt"
+const JOURNAL_MD5 = "68e730bf3e67b36dca7892a8dc4aa26c"
+const CHUNK_SIZE = 1024
+
+
+func hash_file(path):
+	var ctx = HashingContext.new()
+	var file = File.new()
+	# Start a MD5 context.
+	ctx.start(HashingContext.HASH_MD5)
+	# Check that file exists.
+	if not file.file_exists(path):
+		return
+	# Open the file to hash.
+	file.open(path, File.READ)
+	# Update the context after reading each chunk.
+	while not file.eof_reached():
+		ctx.update(file.get_buffer(CHUNK_SIZE))
+	# Get the computed hash.
+	var res = ctx.finish()
+	# Print return hex string of the hashing
+	return res.hex_encode()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,14 +69,20 @@ func _verify_dir():
 	if not dir.dir_exists(omikron_dir_path):
 		_log("Directory "+omikron_dir_path+" is invalid")
 		return false
+	
 	_log(omikron_dir_path+" Exists!")
 	if dir.open(omikron_dir_path) != OK:
 		_log("Couldn't open "+omikron_dir_path)
 		return false
-	
+		
 	_log("Checking "+good_fnt)
 	if not dir.file_exists(good_fnt):
 		_log("File "+good_fnt+" doesn't exist in "+omikron_dir_path)
+		return false
+		
+	var font_hash = hash_file(join_to_path(good_fnt))
+	if not font_hash == JOURNAL_MD5:
+		_log("MD5 check for "+good_fnt+" failed, expected "+JOURNAL_MD5+" got "+font_hash)
 		return false
 	
 	_log("All checks OK!")
@@ -65,6 +92,9 @@ func _verify_dir():
 func backup_files(dir):
 	_log("Renaming the fonts to be replaced")
 	for file in bad_fnt:
+		if dir.file_exists(file+"_bak"):
+			_log("Skipping backup, "+file+" has already been saved")
+			continue
 		if dir.rename(file,file+"_bak") == OK:
 			_log("Renaming of "+file+" OK!")
 		else:

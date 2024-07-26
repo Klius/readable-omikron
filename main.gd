@@ -80,10 +80,10 @@ func _verify_dir():
 		_log("File "+good_fnt+" doesn't exist in "+omikron_dir_path)
 		return false
 		
-	var font_hash = hash_file(join_to_path(good_fnt))
-	if not font_hash == JOURNAL_MD5:
-		_log("MD5 check for "+good_fnt+" failed, expected "+JOURNAL_MD5+" got "+font_hash)
-		return false
+#	var font_hash = hash_file(join_to_path(good_fnt))
+#	if not font_hash == JOURNAL_MD5:
+#		_log("MD5 check for "+good_fnt+" failed, expected "+JOURNAL_MD5+" got "+font_hash)
+#		return false
 	
 	_log("All checks OK!")
 	

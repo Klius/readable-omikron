@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://folder-fill.svg" type="Texture" id=2]
+[ext_resource path="res://assets/arrow-rotate-right-solid.svg" type="Texture" id=2]
+[ext_resource path="res://assets/folder-open-regular.svg" type="Texture" id=3]
+[ext_resource path="res://assets/arrow-rotate-left-solid.svg" type="Texture" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -23,6 +25,7 @@ access = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 20.0
+margin_top = 18.0
 margin_right = -20.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
@@ -35,62 +38,77 @@ scroll_active = false
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 19.0
 margin_right = 984.0
-margin_bottom = 43.0
+margin_bottom = 120.0
 
 [node name="PathTextBox" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
-margin_right = 952.0
+margin_right = 851.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
+size_flags_vertical = 0
 placeholder_text = "/path/to/omikron/dir"
 
-[node name="btn_browse" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 956.0
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 855.0
 margin_right = 984.0
-margin_bottom = 24.0
+margin_bottom = 101.0
+
+[node name="btn_browse" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 129.0
+margin_bottom = 31.0
+text = " Select Folder"
+icon = ExtResource( 3 )
+
+[node name="btn_go" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 35.0
+margin_right = 129.0
+margin_bottom = 66.0
+text = " Replace font"
 icon = ExtResource( 2 )
 
+[node name="btn_restore" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 70.0
+margin_right = 129.0
+margin_bottom = 101.0
+text = "Restore Font"
+icon = ExtResource( 4 )
+
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
-margin_top = 47.0
+margin_top = 124.0
 margin_right = 984.0
-margin_bottom = 56.0
+margin_bottom = 133.0
 custom_constants/separation = 9
 custom_styles/separator = SubResource( 1 )
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 60.0
-margin_right = 984.0
-margin_bottom = 80.0
-alignment = 2
-
-[node name="btn_go" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 893.0
-margin_right = 984.0
-margin_bottom = 20.0
-text = "Replace font"
-
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 84.0
+margin_top = 137.0
 margin_right = 984.0
-margin_bottom = 88.0
+margin_bottom = 141.0
 
 [node name="RTL_log" type="RichTextLabel" parent="VBoxContainer"]
-margin_top = 92.0
+margin_top = 145.0
 margin_right = 984.0
-margin_bottom = 107.0
+margin_bottom = 160.0
 text = "Log"
 fit_content_height = true
 
 [node name="TextBoxLog" type="TextEdit" parent="VBoxContainer"]
-margin_top = 111.0
+margin_top = 164.0
 margin_right = 984.0
-margin_bottom = 600.0
+margin_bottom = 574.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 readonly = true
 show_line_numbers = true
 wrap_enabled = true
 
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 578.0
+margin_right = 984.0
+margin_bottom = 582.0
+
 [connection signal="confirmed" from="FileDialog" to="." method="_on_FileDialog_confirmed"]
 [connection signal="text_changed" from="VBoxContainer/HBoxContainer/PathTextBox" to="." method="_on_PathTextBox_text_changed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/btn_browse" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/btn_go" to="." method="_on_btn_go_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_browse" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_go" to="." method="_on_btn_go_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_restore" to="." method="_on_btn_restore_pressed"]

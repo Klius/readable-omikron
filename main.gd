@@ -132,3 +132,24 @@ func _on_btn_go_pressed():
 	
 
 
+
+
+func _on_btn_restore_pressed():
+	#Check fonts/files are there
+	#restore_bak fonts to it's original names.
+	var dir = _verify_dir()
+	if not dir:
+		_log("ERROR make sure that "+$VBoxContainer/HBoxContainer/PathTextBox.text+" is the correct directory")
+		return false
+	restore_files(dir)
+	_log("Fonts have been restored to it's originals, have fun!")
+	
+func restore_files(dir):
+	for file in bad_fnt:
+		if dir.file_exists(file+"_bak"):
+			_log("Detected "+file+", proceeding to restore it")
+			if dir.rename(file+"_bak",file) == OK:
+				_log("Restoring of "+file+" OK!")
+		else:
+			_log("Error restoring file, couldn't find "+file+"_bak")  
+	_log("Restoring done!")
